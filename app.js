@@ -4,8 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/user');
 const meRouter = require('./routes/me');
+const passport = require('passport');
+require('./passport');
 
 var app = express();
 
