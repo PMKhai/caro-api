@@ -6,8 +6,8 @@ var logger = require('morgan');
 
 const usersRouter = require('./routes/user');
 const meRouter = require('./routes/me');
-const passport = require('passport');
-require('./passport');
+
+require('./middlewares/passport');
 
 var app = express();
 

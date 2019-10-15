@@ -1,6 +1,5 @@
 exports.checkToken = (req, res, next) => {
   const header = req.headers['authorization'];
-
   if (typeof header !== 'undefined') {
     const bearer = header.split(' ');
     const token = bearer[1];
@@ -8,7 +7,7 @@ exports.checkToken = (req, res, next) => {
     req.token = token;
     next();
   } else {
-    //If header is undefined return Forbidden (403)
+    //If header is undefined return not authorized (403)
     res.status(403).json({
       data: null,
       error: 'not authorized',

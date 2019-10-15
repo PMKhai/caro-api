@@ -11,7 +11,7 @@ exports.getUserByEmail = async (email) => {
 
 exports.verifyPassword = async (email, password) => {
   const user = await dbs.production.collection(USERS).findOne({ email });
-  return bcrypt.compare(password, user.passsword);
+  return bcrypt.compare(password, user.password);
 };
 
 exports.findOneById = async (payloadID) => {

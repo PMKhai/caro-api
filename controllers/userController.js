@@ -18,9 +18,10 @@ exports.login = (req, res, next) => {
       }
 
       const token = jwt.sign(user, 'your_jwt_secret', {
-        expiresIn: 14400, // 4 hours
+        expiresIn: 20, // 20 seconds
       });
 
+      delete user.password;
       return res.json({ data: { user, token }, error: null });
     });
   })(req, res);

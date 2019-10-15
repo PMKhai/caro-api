@@ -12,7 +12,7 @@ exports.getProfile = (req, res, next) => {
       });
     } else {
       //If token is successfully verified, we can send the autorized data
-      delete authorizedData.passsword;
+      delete authorizedData.password;
       res.json({
         data: authorizedData,
         error: null,
