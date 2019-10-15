@@ -18,7 +18,7 @@ exports.login = (req, res, next) => {
       }
 
       const token = jwt.sign(user, 'your_jwt_secret', {
-        expiresIn: 604800, // 1 week
+        expiresIn: 14400, // 4 hours
       });
 
       return res.json({ data: { user, token }, error: null });
@@ -27,7 +27,24 @@ exports.login = (req, res, next) => {
 };
 
 exports.register = async (req, res, next) => {
-  const { email } = req.body;
-  const user = await userModel.checkEmail(emai);
-  res.status(200).json({ error: false, user, errorCode: null });
+  try {
+    const { email, password, repassword } = req.body;
+
+    if (password !== repassword)
+      res
+        .status(422)
+        .json({ data: null, error: "Password and repassword don't match." });
+
+    const user = await userModel.insertNewAccount(email, password);
+    if (user)
+      return res
+        .status(200)
+        .json({ data: { message: 'success register' }, error: null });
+    else
+      return res
+        .status(434)
+        .json({ data: null, error: ' registration failed' });
+  } catch (error) {
+    return res.status(500).json({ data: null, error: 'error' });
+  }
 };

@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const meController = require('.././controllers/meController');
+const meMiddleware = require('../middlewares/me');
 
-router.get('/', (req, res, next) => {
-  const token = 'sssssssssss';
-  res.setHeader(token);
-  res.header(token);
-  res.status(200).json({ error: false, data: null, errorCode: null });
-});
+router.get('/', meMiddleware.checkToken, meController.getProfile);
 
 module.exports = router;

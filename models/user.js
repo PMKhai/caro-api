@@ -10,9 +10,17 @@ exports.getUserByEmail = async (email) => {
 };
 
 exports.verifyPassword = async (email, password) => {
-  return true;
+  const user = await dbs.production.collection(USERS).findOne({ email });
+  return bcrypt.compare(password, user.passsword);
 };
 
 exports.findOneById = async (payloadID) => {
   return { email: 'minhkhai3012@gmail.com' };
+};
+
+exports.insertNewAccount = async (email, password) => {
+  const passwordHass = await bcrypt.hash(password, SALT_ROUNDS);
+  return await dbs.production
+    .collection(USERS)
+    .insertOne({ email, password: passwordHass });
 };
