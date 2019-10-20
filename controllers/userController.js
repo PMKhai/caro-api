@@ -18,7 +18,7 @@ exports.login = (req, res, next) => {
       }
 
       const token = jwt.sign(user, 'your_jwt_secret', {
-        expiresIn: 20, // 20 seconds
+        expiresIn: 14400, // 4 hours
       });
 
       delete user.password;
