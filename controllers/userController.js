@@ -14,7 +14,7 @@ exports.login = (req, res, next) => {
 
     req.login(user, { session: false }, (err) => {
       if (err) {
-        res.send(err);
+        return res.send(err);
       }
 
       const token = jwt.sign(user, 'your_jwt_secret', {
@@ -32,7 +32,7 @@ exports.register = async (req, res, next) => {
     const { email, password, repassword } = req.body;
 
     if (password !== repassword)
-      res
+      return res
         .status(422)
         .json({ data: null, error: "Password and repassword don't match." });
 

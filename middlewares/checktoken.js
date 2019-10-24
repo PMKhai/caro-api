@@ -8,7 +8,7 @@ exports.checkToken = (req, res, next) => {
     next();
   } else {
     //If header is undefined return not authorized (403)
-    res.status(403).json({
+    return res.status(403).json({
       data: null,
       error: 'not authorized',
     });

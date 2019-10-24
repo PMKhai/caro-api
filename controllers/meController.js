@@ -6,18 +6,18 @@ exports.getProfile = (req, res, next) => {
     if (err) {
       //If error send Forbidden (403)
       console.log('ERROR: Could not connect to the protected route');
-      res.status(403).json({
+      return res.status(403).json({
         data: null,
         error: 'not authorized',
       });
     } else {
       //If token is successfully verified, we can send the autorized data
       delete authorizedData.password;
-      res.json({
+      console.log('SUCCESS: Connected to protected route');
+      return res.json({
         data: authorizedData,
         error: null,
       });
-      console.log('SUCCESS: Connected to protected route');
     }
   });
 };
