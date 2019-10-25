@@ -24,3 +24,9 @@ exports.insertNewAccount = async (email, password) => {
     .collection(USERS)
     .insertOne({ email, password: passwordHass });
 };
+
+exports.editAccount = async (id, gender) => {
+  return dbs.production
+    .collection(USERS)
+    .updateOne({ _id: ObjectID(id) }, { $set: { gender: gender } });
+};

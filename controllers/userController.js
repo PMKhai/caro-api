@@ -49,3 +49,23 @@ exports.register = async (req, res, next) => {
     return res.status(500).json({ data: null, error: 'error' });
   }
 };
+
+exports.edit = async (req, res, next) => {
+  try {
+    const { id, gender } = req.body;
+
+    if (!gender)
+      return res.status(406).json({ data: null, error: 'gender is required' });
+
+    if (!id)
+      return res.status(406).json({ data: null, error: 'user_id is required' });
+
+    const isUpdate = userModel.editAccount(id, gender);
+
+    if (isUpdate) return res.status(200).json({ data: 'success', erorr: null });
+    else
+      return res.status(500).json({ data: null, error: 'can not update user' });
+  } catch (error) {
+    return res.status(500).json({ data: null, error: 'error' });
+  }
+};
