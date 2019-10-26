@@ -30,3 +30,14 @@ exports.editAccount = async (id, gender) => {
     .collection(USERS)
     .updateOne({ _id: ObjectID(id) }, { $set: { gender: gender } });
 };
+
+exports.getUserByIdGoogle = async (IdGoogle) => {
+  return await dbs.production.collection(USERS).findOne({ sub: IdGoogle });
+};
+
+exports.insertNewAccountGoogle = async (user) => {
+  const { sub, name, picture, given_name, family_name, locale } = user;
+  return await dbs.production
+    .collection(USERS)
+    .insertOne({ sub, name, given_name, family_name, picture, locale });
+};

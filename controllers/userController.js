@@ -69,3 +69,18 @@ exports.edit = async (req, res, next) => {
     return res.status(500).json({ data: null, error: 'error' });
   }
 };
+
+exports.authGoogle = (req, res, next) => {
+  passport.authenticate('google', { session: false, scope: ['profile'] })(
+    req,
+    res
+  );
+};
+
+exports.authGoogleCallback = (req, res, next) => {
+  const user = req.user._json;
+  const token = jwt.sign(user, 'your_jwt_secret', {
+    expiresIn: 14400, // 4 hours
+  });
+  return res.json({ data: { user, token }, error: null });
+};
