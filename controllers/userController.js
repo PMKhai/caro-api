@@ -54,7 +54,7 @@ exports.edit = async (req, res, next) => {
   try {
     const { id, gender } = req.body;
 
-    if (!gender)
+    if (gender === null || gender === undefined)
       return res.status(406).json({ data: null, error: 'gender is required' });
 
     if (!id)
