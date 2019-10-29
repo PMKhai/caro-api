@@ -43,7 +43,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log(profile);
         const isExist = await userModel.getUserByIdGoogle(profile.id);
         if (!isExist) await userModel.insertNewAccountGoogle(profile._json);
         return done(null, profile);

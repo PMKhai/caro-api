@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const session = require('express-session');
 
 const usersRouter = require('./routes/user');
 const meRouter = require('./routes/me');
@@ -13,6 +14,14 @@ require('./middlewares/passport');
 var app = express();
 
 app.use(cors());
+
+app.use(
+  session({
+    secret: 'free_bird',
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

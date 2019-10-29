@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const userModel = require('../models/user');
 
+let socketId; // Todo: fix get socketId
+
 exports.login = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     console.log(err);
@@ -71,6 +73,7 @@ exports.edit = async (req, res, next) => {
 };
 
 exports.authGoogle = (req, res, next) => {
+  socketId = req.query.socketId;
   passport.authenticate('google', { session: false, scope: ['profile'] })(
     req,
     res
@@ -79,8 +82,12 @@ exports.authGoogle = (req, res, next) => {
 
 exports.authGoogleCallback = (req, res, next) => {
   const user = req.user._json;
+  const io = req.app.get('io');
+
   const token = jwt.sign(user, 'your_jwt_secret', {
     expiresIn: 14400, // 4 hours
   });
-  return res.json({ data: { user, token }, error: null });
+  const data = { user, token };
+  io.in(socketId).emit('google', data);
+  res.end();
 };
