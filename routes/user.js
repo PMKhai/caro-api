@@ -23,9 +23,9 @@ router.get(
   userController.authGoogleCallback
 );
 
-router.use((req, res, next) => {
-  req.session.socketId = req.query.socketId;
-  next();
-});
+// router.use((req, res, next) => {
+//   req.session.socketId = req.query.socketId;
+//   next();
+// });
 
 module.exports = router;

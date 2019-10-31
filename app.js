@@ -8,6 +8,7 @@ const session = require('express-session');
 
 const usersRouter = require('./routes/user');
 const meRouter = require('./routes/me');
+const gameRouter = require('./routes/game');
 
 require('./middlewares/passport');
 
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/user', usersRouter);
 app.use('/me', meRouter);
+app.use('/game', gameRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

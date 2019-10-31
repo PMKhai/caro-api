@@ -28,6 +28,25 @@ initdb()
     server = http.createServer(app);
 
     const io = socketio(server);
+
+    io.on('connection', (socket) => {
+      console.log(socket.id);
+
+      socket.on('subscribe', function(room) {
+        console.log('joining room', room);
+        socket.join(room);
+      });
+
+      socket.on('unsubscribe', function(room) {
+        console.log('leaving room', room);
+        socket.leave(room);
+      });
+
+      socket.on('SEND_MESSAGE', function(data) {
+        io.in(data.room).emit('RECEIVE_MESSAGE', data);
+      });
+    });
+
     app.set('io', io);
 
     /**
