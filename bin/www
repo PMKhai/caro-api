@@ -45,6 +45,10 @@ initdb()
       socket.on('SEND_MESSAGE', function(data) {
         io.in(data.room).emit('RECEIVE_MESSAGE', data);
       });
+
+      socket.on('SEND_TROOP', (data) =>{
+        io.in(data.room).emit('RECIVE_TROOP', data)
+      })
     });
 
     app.set('io', io);

@@ -12,6 +12,9 @@ exports.findMatch = (req, res, next) => {
     const user = {
       socketId,
       roomId,
+      myTroop: null,
+      yourTroop: null,
+      playFirst: null,
     };
     match.push(user);
     if (match.length === 2) {
@@ -19,8 +22,20 @@ exports.findMatch = (req, res, next) => {
 
       const io = req.app.get('io');
 
+      let i = 0;
       match.forEach((user) => {
-        user.roomId = roomId;
+        if (i === 0) {
+          user.myTroop = 'X';
+          user.yourTroop = 'O';
+          user.playFirst = true;
+        } else {
+          user.myTroop = 'O';
+          user.yourTroop = 'X';
+          user.playFirst = false;
+        }
+        i += 1;
+
+        user.roomId = 'roomId';
         io.in(user.socketId).emit('findmatch', user);
       });
 

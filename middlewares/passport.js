@@ -45,6 +45,7 @@ passport.use(
       try {
         const isExist = await userModel.getUserByIdGoogle(profile.id);
         if (!isExist) await userModel.insertNewAccountGoogle(profile._json);
+
         return done(null, profile);
       } catch (ex) {
         return done(ex);

@@ -54,19 +54,35 @@ exports.register = async (req, res, next) => {
 
 exports.edit = async (req, res, next) => {
   try {
-    const { id, gender } = req.body;
+    const { id, gender, sub } = req.body;
 
     if (gender === null || gender === undefined)
       return res.status(406).json({ data: null, error: 'gender is required' });
 
-    if (!id)
+    if (!id && !sub)
       return res.status(406).json({ data: null, error: 'user_id is required' });
 
-    const isUpdate = userModel.editAccount(id, gender);
+    if (id) {
+      const isUpdate = userModel.editAccountById(id, gender);
 
-    if (isUpdate) return res.status(200).json({ data: 'success', erorr: null });
-    else
-      return res.status(500).json({ data: null, error: 'can not update user' });
+      if (isUpdate)
+        return res.status(200).json({ data: 'success', erorr: null });
+      else
+        return res
+          .status(500)
+          .json({ data: null, error: 'can not update user' });
+    }
+
+    if (sub) {
+      const isUpdate = userModel.editAccountById(sub, gender);
+
+      if (isUpdate)
+        return res.status(200).json({ data: 'success', erorr: null });
+      else
+        return res
+          .status(500)
+          .json({ data: null, error: 'can not update user' });
+    }
   } catch (error) {
     return res.status(500).json({ data: null, error: 'error' });
   }
@@ -90,4 +106,9 @@ exports.authGoogleCallback = (req, res, next) => {
   const data = { user, token };
   io.in(socketId).emit('google', data);
   res.end();
+};
+
+exports.authFacebook = (req, res, next) => {
+  socketId = req.query.socketId;
+  passport.authenticate('facebook', { session: false })(req, res);
 };

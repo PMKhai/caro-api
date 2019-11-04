@@ -25,10 +25,16 @@ exports.insertNewAccount = async (email, password) => {
     .insertOne({ email, password: passwordHass });
 };
 
-exports.editAccount = async (id, gender) => {
+exports.editAccountById = async (id, gender) => {
   return dbs.production
     .collection(USERS)
     .updateOne({ _id: ObjectID(id) }, { $set: { gender: gender } });
+};
+
+exports.editAccountBySub = async (sub, gender) => {
+  return dbs.production
+    .collection(USERS)
+    .updateOne({ sub }, { $set: { gender: gender } });
 };
 
 exports.getUserByIdGoogle = async (IdGoogle) => {
