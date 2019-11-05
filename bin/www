@@ -46,9 +46,13 @@ initdb()
         io.in(data.room).emit('RECEIVE_MESSAGE', data);
       });
 
-      socket.on('SEND_TROOP', (data) =>{
-        io.in(data.room).emit('RECIVE_TROOP', data)
-      })
+      socket.on('SEND_TROOP', (data) => {
+        io.in(data.room).emit('RECIVE_TROOP', data);
+      });
+
+      socket.on('SEND_WINNER', (data) => {
+        io.in(data.room).emit('RECIVE_WINNER', data);
+      });
     });
 
     app.set('io', io);
