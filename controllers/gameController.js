@@ -34,8 +34,10 @@ exports.findMatch = (req, res, next) => {
           user.playFirst = false;
         }
         i += 1;
+        const room = Math.round(new Date().getTime() / 1000);
+        console.log(room);
 
-        user.roomId = 'roomId';
+        user.roomId = room;
         io.in(user.socketId).emit('findmatch', user);
       });
 

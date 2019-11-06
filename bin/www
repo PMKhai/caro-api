@@ -53,6 +53,10 @@ initdb()
       socket.on('SEND_WINNER', (data) => {
         io.in(data.room).emit('RECIVE_WINNER', data);
       });
+
+      socket.on('SEND_TIE_REQUEST', (data) => {
+        io.in(data.room).emit('RECIVE_TIE_REQUEST', data);
+      });
     });
 
     app.set('io', io);
