@@ -15,7 +15,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-session": "^1.17.0",
-    "hbs": "~4.0.4",
+    "hbs": "~4.2.0",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.2",
